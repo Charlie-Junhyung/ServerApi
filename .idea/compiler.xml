@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="ServerApi" />
+        <module name="parse4j" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="main" target="7" />
+      <module name="parse4j" target="7" />
+      <module name="ServerApi" target="8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
