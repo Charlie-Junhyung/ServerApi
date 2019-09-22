@@ -1,4 +1,4 @@
-package com.beaconyx;
+package com.beaconyx.model;
 
 public class Item {
     private String contentid;
