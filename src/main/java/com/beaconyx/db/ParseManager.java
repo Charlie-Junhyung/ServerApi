@@ -13,6 +13,7 @@ import java.util.Queue;
 
 @SuppressWarnings("Duplicates")
 public class ParseManager {
+    private int totalCount;
 
     public ParseManager() {
         Parse.initialize(ConstantDepot.APP_ID, ConstantDepot.REST_KEY, ConstantDepot.SERVER_URL);
@@ -20,13 +21,14 @@ public class ParseManager {
 
     public void updateAll(List<Item> items) {
         Queue<Item> queue = new LinkedList<>(items);
+        totalCount = queue.size();
         updateRecursive(queue);
     }
 
     private void updateRecursive(Queue<Item> items) {
         if (items.size() == 0) {
-            MyLogger.z("Successfully updated data set");
-            return;
+            MyLogger.z(totalCount + " items updated successfully");
+            System.exit(0);
         }
 
         Item item = items.poll();
@@ -35,25 +37,29 @@ public class ParseManager {
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> list, ParseException e) {
-                if (e == null) {
-                    ParseObject object = list.get(0);
-                    object.put(ConstantDepot.COL_TITLE, item.getTitle());
-                    object.put(ConstantDepot.COL_EVENT_START_DATE, item.getEventstartdate());
-                    object.put(ConstantDepot.COL_EVENT_END_DATE, item.getEventenddate());
-                    object.put(ConstantDepot.COL_FIRST_IMAGE, item.getFirstimage());
-                    object.put(ConstantDepot.COL_MAP_X, Double.parseDouble(item.getMapx()));
-                    object.put(ConstantDepot.COL_MAP_Y, Double.parseDouble(item.getMapy()));
-                    object.put(ConstantDepot.COL_READ_COUNT, Integer.parseInt(item.getReadcount()));
-                    object.put(ConstantDepot.COL_MODIFIED_TIME, item.getModifiedtime());
-
-                    double lat = Double.parseDouble(item.getMapy()),
-                            lng = Double.parseDouble(item.getMapx());
-                    object.put(ConstantDepot.COL_MAP_POINT, new ParseGeoPoint(lat, lng));
-
-                    object.saveInBackground();
-
-                    updateRecursive(items);
+                ParseObject object;
+                if (list == null || list.size() == 0) {
+                    object = new ParseObject(ConstantDepot.TABLE_NAME);
+                    object.put(ConstantDepot.COL_CONTENT_ID, item.getContentid());
+                    object.put(ConstantDepot.COL_LIKE_COUNT, 0);
+                } else {
+                    object = list.get(0);
                 }
+
+                object.put(ConstantDepot.COL_TITLE, item.getTitle());
+                object.put(ConstantDepot.COL_EVENT_START_DATE, item.getEventstartdate());
+                object.put(ConstantDepot.COL_EVENT_END_DATE, item.getEventenddate());
+                object.put(ConstantDepot.COL_FIRST_IMAGE, item.getFirstimage());
+                object.put(ConstantDepot.COL_MAP_X, Double.parseDouble(item.getMapx()));
+                object.put(ConstantDepot.COL_MAP_Y, Double.parseDouble(item.getMapy()));
+                object.put(ConstantDepot.COL_READ_COUNT, Integer.parseInt(item.getReadcount()));
+                object.put(ConstantDepot.COL_MODIFIED_TIME, item.getModifiedtime());
+                double lat = Double.parseDouble(item.getMapy()),
+                        lng = Double.parseDouble(item.getMapx());
+                object.put(ConstantDepot.COL_MAP_POINT, new ParseGeoPoint(lat, lng));
+                object.saveInBackground();
+
+                updateRecursive(items);
             }
         });
     }
@@ -65,8 +71,8 @@ public class ParseManager {
 
     private void insertRecursive(Queue<Item> items) {
         if (items.size() == 0) {
-            MyLogger.z("Successfully stored data set");
-            return;
+            MyLogger.z(totalCount + " items saved successfully\n");
+            System.exit(0);
         }
 
         Item item = items.poll();

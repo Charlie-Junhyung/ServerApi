@@ -7,7 +7,6 @@ import com.beaconyx.log.MyLogger;
 import com.beaconyx.model.Item;
 
 import java.text.ParseException;
-import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -19,7 +18,7 @@ public class Main {
         cal.set(Calendar.MINUTE, 0);
         cal.set(Calendar.SECOND, 0);
         cal.set(Calendar.MILLISECOND, 0);
-        cal.add(Calendar.DATE, -2);
+        cal.add(Calendar.DATE, -1);
         Date yesterday = cal.getTime();
 
         SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
@@ -35,6 +34,7 @@ public class Main {
                     if (modifiedTime.before(yesterday))
                         iterator.remove();
                 } catch(ParseException e) {
+                    MyLogger.z(e.getMessage());
                 }
             }
         }
@@ -60,8 +60,8 @@ public class Main {
         }
 
         List<Item> refinedList = refiningDataSet(itemList);
-        refinedList.forEach(System.out::println);
-        System.out.println(refinedList.size() + " items updated at yesterday");
+        int updateItemsCount = refinedList.size();
+        MyLogger.z(updateItemsCount + " items updated at yesterday");
 
         ParseManager parseManager = new ParseManager();
         //parseManager.insertAll(itemList);

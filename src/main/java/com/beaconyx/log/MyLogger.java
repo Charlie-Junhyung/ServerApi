@@ -5,19 +5,26 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class MyLogger {
-    private static final String FILENAME = "AutoDBUpdater.log";
+    private static String getFilename() {
+        SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");
+
+        return "/usr/local/auto_update_" + df.format(new Date()) + ".log";
+    }
 
     public static void z(String message) {
         BufferedOutputStream output;
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S | ");
 
         try {
-            output = new BufferedOutputStream(new FileOutputStream(FILENAME, true));
+            output = new BufferedOutputStream(new FileOutputStream(getFilename(), true));
             StringBuilder builder = new StringBuilder(message);
             builder.insert(0, formatter.format(new Date()));
-            builder.append("\n");
+            String line = System.getProperty("line.separator");
+            builder.append(line);
 
             output.write(builder.toString().getBytes());
+            output.flush();
+            output.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
