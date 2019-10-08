@@ -59,12 +59,12 @@ public class Main {
             MyLogger.z(itemList.size() + " items parsed successfully");
         }
 
-        List<Item> refinedList = refiningDataSet(itemList);
+        /*List<Item> refinedList = refiningDataSet(itemList);
         int updateItemsCount = refinedList.size();
-        MyLogger.z(updateItemsCount + " items updated at yesterday");
+        MyLogger.z(updateItemsCount + " items updated at yesterday");*/
 
         ParseManager parseManager = new ParseManager();
-        //parseManager.insertAll(itemList);
-        parseManager.updateAll(refinedList);
+        parseManager.insertAll(itemList);
+        //parseManager.updateAll(refinedList);
     }
 }

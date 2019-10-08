@@ -7,8 +7,8 @@ import java.util.Date;
 public class MyLogger {
     private static String getFilename() {
         SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");
-
-        return "/usr/local/auto_update_" + df.format(new Date()) + ".log";
+        //return "insert_" + df.format(new Date()) + ".log";
+        return "auto_update_" + df.format(new Date()) + ".log";
     }
 
     public static void z(String message) {

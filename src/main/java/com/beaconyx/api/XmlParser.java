@@ -53,6 +53,11 @@ public class XmlParser {
                 Element node = (Element) nodeList.item(i);
                 Item item = new Item();
                 item.setContentid(node.getElementsByTagName(ConstantDepot.COL_CONTENT_ID).item(0).getTextContent());
+                if (node.getElementsByTagName(ConstantDepot.COL_AREA_CODE).item(0) == null)
+                    item.setAreacode("0");
+                else
+                    item.setAreacode(node.getElementsByTagName(ConstantDepot.COL_AREA_CODE).item(0).getTextContent());
+
                 item.setEventstartdate(node.getElementsByTagName(ConstantDepot.COL_EVENT_START_DATE).item(0).getTextContent());
                 item.setEventenddate(node.getElementsByTagName(ConstantDepot.COL_EVENT_END_DATE).item(0).getTextContent());
                 if (node.getElementsByTagName(ConstantDepot.COL_FIRST_IMAGE).item(0) == null)

@@ -10,8 +10,17 @@ import java.net.URL;
 import java.net.URLEncoder;
 
 public class ApiManager {
+    private static final String BASE_URL = "http://api.visitkorea.or.kr/openapi/service/rest/$lang/searchFestival";
+    private static final String KOREAN = "KorService";
+    private static final String CHINESE_S = "ChsService";
+    private static final String CHINESE_T = "ChtService";
+    private static final String ENGLISH = "EngService";
+    private static final String FRENCH = "FreService";
+    private static final String GERMAN = "GerService";
+    private static final String JAPANESE = "JpnService";
+    private static final String RUSSIAN = "RusService";
+    private static final String SPANISH = "SpnService";
 
-    private static final String BASE_URL = "http://api.visitkorea.or.kr/openapi/service/rest/KorService/searchFestival";
     private static final String API_KEY = "QpY%2FRYx6iXEAjwQwB67dMVp%2B3QOZCTS%2B20PpVJraGcO3qgzQAzBAJRRKP62f%2F2Eq4nF5b4LXUY0ImR4iM7t0Rg%3D%3D";
 
     private String encodingUTF(String toEncode) {
@@ -33,7 +42,7 @@ public class ApiManager {
 
     private String buildRestApiUrl() {
         // URL
-        StringBuilder builder = new StringBuilder(BASE_URL);
+        StringBuilder builder = new StringBuilder(BASE_URL.replace("$lang", RUSSIAN));
 
         builder.append(
                 firstQuery(encodingUTF("ServiceKey"))); //공공데이터포털에서 발급받은 인증키

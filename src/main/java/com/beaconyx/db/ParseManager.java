@@ -19,7 +19,7 @@ public class ParseManager {
         Parse.initialize(ConstantDepot.APP_ID, ConstantDepot.REST_KEY, ConstantDepot.SERVER_URL);
     }
 
-    public void updateAll(List<Item> items) {
+    /*public void updateAll(List<Item> items) {
         Queue<Item> queue = new LinkedList<>(items);
         totalCount = queue.size();
         updateRecursive(queue);
@@ -32,14 +32,14 @@ public class ParseManager {
         }
 
         Item item = items.poll();
-        ParseQuery<ParseObject> query = ParseQuery.getQuery(ConstantDepot.TABLE_NAME);
+        ParseQuery<ParseObject> query = ParseQuery.getQuery(ConstantDepot.TABLE_CHINESE_S);
         query.whereEqualTo(ConstantDepot.COL_CONTENT_ID, item.getContentid());
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> list, ParseException e) {
                 ParseObject object;
                 if (list == null || list.size() == 0) {
-                    object = new ParseObject(ConstantDepot.TABLE_NAME);
+                    object = new ParseObject(ConstantDepot.TABLE_CHINESE_S);
                     object.put(ConstantDepot.COL_CONTENT_ID, item.getContentid());
                     object.put(ConstantDepot.COL_LIKE_COUNT, 0);
                 } else {
@@ -47,6 +47,7 @@ public class ParseManager {
                 }
 
                 object.put(ConstantDepot.COL_TITLE, item.getTitle());
+                object.put(ConstantDepot.COL_AREA_CODE, item.getAreacode());
                 object.put(ConstantDepot.COL_EVENT_START_DATE, item.getEventstartdate());
                 object.put(ConstantDepot.COL_EVENT_END_DATE, item.getEventenddate());
                 object.put(ConstantDepot.COL_FIRST_IMAGE, item.getFirstimage());
@@ -62,10 +63,11 @@ public class ParseManager {
                 updateRecursive(items);
             }
         });
-    }
+    }*/
 
     public void insertAll(List<Item> items) {
         Queue<Item> queue = new LinkedList<>(items);
+        totalCount = queue.size();
         insertRecursive(queue);
     }
 
@@ -77,9 +79,10 @@ public class ParseManager {
 
         Item item = items.poll();
 
-        ParseObject originalData = new ParseObject(ConstantDepot.TABLE_NAME);
+        ParseObject originalData = new ParseObject(ConstantDepot.TABLE_RUSSIAN);
         originalData.put(ConstantDepot.COL_CONTENT_ID, item.getContentid());
         originalData.put(ConstantDepot.COL_TITLE, item.getTitle());
+        originalData.put(ConstantDepot.COL_AREA_CODE, item.getAreacode());
         originalData.put(ConstantDepot.COL_EVENT_START_DATE, item.getEventstartdate());
         originalData.put(ConstantDepot.COL_EVENT_END_DATE, item.getEventenddate());
         originalData.put(ConstantDepot.COL_FIRST_IMAGE, item.getFirstimage());

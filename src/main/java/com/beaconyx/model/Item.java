@@ -10,6 +10,7 @@ public class Item {
     private String mapy;
     private String modifiedtime;
     private String readcount;
+    private String areacode;
 
     public String getContentid() {
         return contentid;
@@ -81,6 +82,14 @@ public class Item {
 
     public void setReadcount(String readcount) {
         this.readcount = readcount;
+    }
+
+    public String getAreacode() {
+        return areacode;
+    }
+
+    public void setAreacode(String areacode) {
+        this.areacode = areacode;
     }
 
     @Override
